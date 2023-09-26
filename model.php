@@ -50,7 +50,6 @@
                 $row = $result->fetch_assoc(); 
                 return (string)$row['total'];
             }
-            return 0;
         }
 
 

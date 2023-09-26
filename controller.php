@@ -27,13 +27,13 @@
         public function processRequest() {
             $this->model->getDataByTable("DarkStar");
             $this->model->getDataByTable("Jedi");
+            $this->totalDS = $this->model->getTotalByTable('DarkStar');
+            $this->totalJ = $this->model->getTotalByTable('Jedi');
         }
 
         public function displayDataInTable() {
             $this->model->sortData();
             $this->view->displayData($this->model->dataArrays);
-            $this->totalDS = $this->model->getTotalByTable('DarkStar');
-            $this->totalJ = $this->model->getTotalByTable('Jedi');
         }
     }
 

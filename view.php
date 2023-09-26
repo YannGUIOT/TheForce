@@ -5,7 +5,7 @@
             foreach ($data as $row) {
                 echo '<tr>
                           <td>' . $row['table'] . '</td>
-                          <td>' . (string)$row['total'] . '</td>
+                          <td>' . $row['total'] . '</td>
                           <td>' . date('Y-m-d H:i:s', strtotime($row['date'])) . '</td>
                       </tr>';
             }
