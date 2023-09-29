@@ -6,46 +6,43 @@
     class Controller {
         private $db;
         private $model;
+        private $view;
 
-        public $totalDS=0;
-        public $totalJ=0;
+        public $totalDS;
+        public $totalJ;
 
-        public function __construct() {
-            $this->db = new Database();
-            $this->model = new Model($this->db);
-            $this->view = new View();
+        public function __construct($db, $model, $view) {
+            $this->db = $db;
+            $this->model = $model;
+            $this->view = $view;
         }
 
         public function addData($dataType) {
-            $this->model->updateOrInsert($dataType, 'total');
+            $this->model->insertData($dataType);
         }
         
         public function close() {
             $this->db->closeConnection();
         }
 
-        public function processRequest() {
-            $this->model->getDataByTable("DarkStar");
+        public function processRequest() {  
+            $this->model->getDataByTable("DarkSide");
             $this->model->getDataByTable("Jedi");
-            $this->totalDS = $this->model->getTotalByTable('DarkStar');
+            
+            $this->totalDS = $this->model->getTotalByTable('DarkSide');
             $this->totalJ = $this->model->getTotalByTable('Jedi');
         }
 
-        public function displayDataInTable() {
+        public function globalPage() {
             $this->model->sortData();
-            $this->view->displayData($this->model->dataArrays);
+            $this->view->displayGlobalPage($this->totalDS, $this->totalJ, $this->model->dataArrays);
+        }
+
+        public function getTotalArray() {
+            return array('totalDS' => $this->totalDS, 'totalJ' => $this->totalJ);
         }
     }
-
-    $controller = new Controller();
-
-    if (isset($_POST['addDarkStar']) || isset($_POST['addJedi'])) {
-        $dataType = isset($_POST['addDarkStar']) ? 'DarkStar' : 'Jedi';
-        $controller->addData($dataType);
-        header('Location: index.php');
-        exit;
-    }
-
-    $controller->close();
 ?>
+
+
 
